@@ -1,18 +1,5 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Core</title>
-    <!DOCTYPE html>
-    <html lang="en">
-      <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Home Page</title>
-      </head>
-      <body>
-        <h1>Welcome to the Home Page</h1>
-        <p>This is a basic Django template.</p>
-      </body>
-    </html>
-  </head>
-</html>
+{% extends "core/base.html" %} {% block title %} Home Page {% endblock title %}
+{% block content %}
+<h1 class="text-2xl font-bold">Welcome to the Home Page</h1>
+<p>This is a basic Django template.</p>
+{% endblock content %}
