@@ -8,7 +8,29 @@
       <div class="card">
         <div class="card-content">
           <h2 class="title">Dashboard</h2>
-          <p>Welcome to your dashboard, {{ user.first_name }}!</p>
+          <p>Welcome to your dashboard, {{ user.email }}!</p>
+          <h3 class="subtitle">Your Business Cards</h3>
+          <ul>
+            {% for card in business_cards %}
+              <li>
+                <strong>{{ card.title }}</strong> at {{ card.company_name }}
+                <br>
+                Location: {{ card.location }}
+                <br>
+                Email: {{ card.email }}
+                <br>
+                Phone: {{ card.phone_number }}
+                <br>
+                Website: <a href="{{ card.website }}">{{ card.website }}</a>
+                <br>
+                Created at: {{ card.created_at }}
+                <br>
+                Updated at: {{ card.updated_at }}
+              </li>
+            {% empty %}
+              <li>No business cards found.</li>
+            {% endfor %}
+          </ul>
         </div>
       </div>
     </div>
