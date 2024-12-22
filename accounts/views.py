@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
+from django.urls import reverse
 from .forms import CustomUserCreationForm
 
 def login_view(request):
@@ -12,7 +13,7 @@ def login_view(request):
             user = authenticate(username=email, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('index')
+                return redirect(reverse('dashboard'))
     else:
         form = AuthenticationForm()
     return render(request, 'accounts/login.html', {'form': form})
@@ -27,7 +28,7 @@ def signup_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('index')
+            return redirect(reverse('dashboard'))
     else:
         form = CustomUserCreationForm()
     return render(request, 'accounts/signup.html', {'form': form})

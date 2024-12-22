@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # Django apps
     "accounts",
     "core",
+    "dashboard",
     
     # Third-party apps
 ]
