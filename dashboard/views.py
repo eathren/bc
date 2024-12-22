@@ -17,6 +17,18 @@ def dashboard_view(request):
     })
     
 @login_required
+def edit_business_card_view(request, uuid):
+    business_card = get_object_or_404(BusinessCard, uuid=uuid, user=request.user)
+    if request.method == 'POST':
+        form = BusinessCardForm(request.POST, instance=business_card)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+    else:
+        form = BusinessCardForm(instance=business_card)
+    return render(request, 'dashboard/edit_business_card.html', {'form': form, 'business_card': business_card})
+    
+@login_required
 def add_business_card_view(request):
     if request.method == 'POST':
         form = BusinessCardForm(request.POST)
