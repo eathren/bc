@@ -1,8 +1,41 @@
-{% extends "core/base.html" %} {% block title %} Login Page {% endblock title %}
+<!-- filepath: /home/nolan/Projects/bc/accounts/templates/accounts/login.html -->
+{% extends "core/base.html" %}
+{% load form_tags %}
+{% block title %}
+  Login Page
+{% endblock title %}
 {% block content %}
-<h2>Login</h2>
-<form method="post">
-  {% csrf_token %} {{ form.as_p }}
-  <button type="submit">Login</button>
-</form>
+  <div class="columns is-centered">
+    <div class="column is-half">
+      <div class="card">
+        <div class="card-content">
+          <h2 class="title">Login</h2>
+          <form method="post">
+            {% csrf_token %}
+            <div class="field">
+              <label class="label">Email</label>
+              <div class="control">{{ form.username|add_class:"input" }}</div>
+            </div>
+            <div class="field">
+              <label class="label">Password</label>
+              <div class="control">{{ form.password|add_class:"input" }}</div>
+            </div>
+            <div class="field">
+              <div class="control">
+                <button type="submit" class="button is-primary">Login</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <footer class="card-footer">
+          <p class="card-footer-item">
+            <a href="{% url 'password_reset' %}">Forgot Password?</a>
+          </p>
+          <p class="card-footer-item">
+            <a href="{% url 'signup' %}">Signup</a>
+          </p>
+        </footer>
+      </div>
+    </div>
+  </div>
 {% endblock content %}
