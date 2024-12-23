@@ -10,6 +10,7 @@ python = "^3.10"
 django = "^5.1.4"
 pillow = "^11.0.0"
 djlint = "^1.36.3"
+django-environ = "^0.11.2"
 
 
 [build-system]

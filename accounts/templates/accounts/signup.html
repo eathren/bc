@@ -1,52 +1,53 @@
-{% extends "core/base.html" %}
-{% load form_tags %}
-{% block title %}
-  Signup Page
-{% endblock title %}
-{% block content %}
-  <div class="columns is-centered">
-    <div class="column is-half">
-      <div class="card">
-        <div class="card-content">
-          <h2 class="title">Signup</h2>
-          <form method="post">
-            {% csrf_token %}
-            <div class="field">
-              <label class="label">Email</label>
-              <div class="control">{{ form.email|add_class:"input" }}</div>
-            </div>
-            <div class="field">
-              <label class="label">First Name</label>
-              <div class="control">{{ form.first_name|add_class:"input" }}</div>
-            </div>
-            <div class="field">
-              <label class="label">Last Name</label>
-              <div class="control">{{ form.last_name|add_class:"input" }}</div>
-            </div>
-            <div class="field">
-              <label class="label">Password</label>
-              <div class="control">{{ form.password1|add_class:"input" }}</div>
-            </div>
-            <div class="field">
-              <label class="label">Confirm Password</label>
-              <div class="control">{{ form.password2|add_class:"input" }}</div>
-            </div>
-            <div class="field">
-              <div class="control">
-                <button type="submit" class="button is-primary">Signup</button>
-              </div>
-            </div>
-          </form>
+{% extends "core/base.html" %} {% load form_tags %} {% block title %} Signup
+Page {% endblock title %} {% block content %}
+<div class="columns is-centered">
+  <div class="column is-half">
+    <div class="card">
+      <div class="card-content">
+        <h2 class="title">Signup</h2>
+        {% if messages %}
+        <div class="notification is-danger">
+          {% for message in messages %} {{ message }} {% endfor %}
         </div>
-        <footer class="card-footer">
-          <p class="card-footer-item">
-            <a href="{% url 'password_reset' %}">Forgot Password?</a>
-          </p>
-          <p class="card-footer-item">
-            <a href="{% url 'login' %}">Login</a>
-          </p>
-        </footer>
+        {% endif %}
+        <form method="post">
+          {% csrf_token %}
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">{{ form.email|add_class:"input" }}</div>
+          </div>
+          <div class="field">
+            <label class="label">First Name</label>
+            <div class="control">{{ form.first_name|add_class:"input" }}</div>
+          </div>
+          <div class="field">
+            <label class="label">Last Name</label>
+            <div class="control">{{ form.last_name|add_class:"input" }}</div>
+          </div>
+          <div class="field">
+            <label class="label">Password</label>
+            <div class="control">{{ form.password1|add_class:"input" }}</div>
+          </div>
+          <div class="field">
+            <label class="label">Confirm Password</label>
+            <div class="control">{{ form.password2|add_class:"input" }}</div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <button type="submit" class="button is-primary">Signup</button>
+            </div>
+          </div>
+        </form>
       </div>
+      <footer class="card-footer">
+        <p class="card-footer-item">
+          <a href="{% url 'password_reset' %}">Forgot Password?</a>
+        </p>
+        <p class="card-footer-item">
+          <a href="{% url 'login' %}">Login</a>
+        </p>
+      </footer>
     </div>
   </div>
+</div>
 {% endblock content %}
