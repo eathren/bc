@@ -1,5 +1,7 @@
 from pathlib import Path
 import environ
+import django_heroku
+import dj_database_url
 
 # Initialize environment variables
 env = environ.Env(
@@ -9,6 +11,7 @@ env = environ.Env(
 # Read .env file
 environ.Env.read_env()
 print(f"DJANGO_ENV: {env('DJANGO_ENV')}")
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -73,19 +76,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "bc.wsgi.application"
 
+ALLOWED_HOSTS = ["*"]
+
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 if env('DJANGO_ENV') == 'production':
     DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": env('POSTGRES_DB'),
-            "USER": env('POSTGRES_USER'),
-            "PASSWORD": env('POSTGRES_PASSWORD'),
-            "HOST": env('POSTGRES_HOST'),
-            "PORT": env('POSTGRES_PORT', default='5432'),
-        }
+        "default": dj_database_url.config(
+            default=env('DATABASE_URL')
+        )
     }
 else:
     DATABASES = {
@@ -138,3 +138,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
