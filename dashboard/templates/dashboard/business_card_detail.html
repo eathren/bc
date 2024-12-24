@@ -8,27 +8,32 @@
             <div class="card">
                 <div class="card-content">
                     <h2 class="title">{{ business_card.title }}</h2>
-                    <p>
-                        <strong>Company:</strong> {{ business_card.company_name }}
-                    </p>
-                    <p>
-                        <strong>Location:</strong> {{ business_card.location }}
-                    </p>
-                    <p>
-                        <strong>Email:</strong> {{ business_card.email }}
-                    </p>
-                    <p>
-                        <strong>Phone:</strong> {{ business_card.phone_number }}
-                    </p>
-                    <p>
-                        <strong>Website:</strong> <a href="{{ business_card.website }}">{{ business_card.website }}</a>
-                    </p>
-                    <p>
-                        <strong>Created at:</strong> {{ business_card.created_at }}
-                    </p>
-                    <p>
-                        <strong>Updated at:</strong> {{ business_card.updated_at }}
-                    </p>
+                    {% if business_card.company_name %}
+                        <p>
+                            <strong>Company:</strong> {{ business_card.company_name }}
+                        </p>
+                    {% endif %}
+                    {% if business_card.location %}
+                        <p>
+                            <strong>Location:</strong> {{ business_card.location }}
+                        </p>
+                    {% endif %}
+                    {% if business_card.email %}
+                        <p>
+                            <strong>Email:</strong> {{ business_card.email }}
+                        </p>
+                    {% endif %}
+                    {% if business_card.phone_number %}
+                        <p>
+                            <strong>Phone:</strong> {{ business_card.phone_number }}
+                        </p>
+                    {% endif %}
+                    {% if business_card.website %}
+                        <p>
+                            <strong>Website:</strong> <a href="{{ business_card.website }}">{{ business_card.website }}</a>
+                        </p>
+                    {% endif %}
+                  
                 </div>
             </div>
         </div>
