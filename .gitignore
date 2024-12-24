@@ -122,3 +122,6 @@ cython_debug/
 
 # VS Code
 .vscode/
+
+# local dev db
+db.sqlite3
