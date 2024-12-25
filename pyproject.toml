@@ -9,15 +9,13 @@ readme = "README.md"
 python = "^3.10"
 django = "^5.1.4"
 pillow = "^11.0.0"
-djlint = "^1.36.3"
+djlint = "^1.36.4"
 django-environ = "^0.11.2"
 gunicorn = "^23.0.0"
 whitenoise = "^6.8.2"
 django-heroku = "^0.3.1"
 dj-database-url = "^2.3.0"
 psycopg2 = "^2.9.10"
-qrcode = {extras = ["pil"], version = "^8.0"}
-django-qrcode = "^0.3"
 
 
 [build-system]

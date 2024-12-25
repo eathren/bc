@@ -1,8 +1,68 @@
+<!-- filepath: /home/nolan/Projects/bc/core/templates/core/index.html -->
 {% extends "core/base.html" %}
 {% block title %}
     Home Page
 {% endblock title %}
 {% block content %}
-    <h1 class="text-2xl font-bold">Welcome to the Home Page</h1>
-    <p>This is a basic Django template.</p>
+    <div class="wrapper">
+        <section class="hero is-primary is-bold">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">Digital Business Cards Made in a Flash</h1>
+                    <h2 class="subtitle">Create digital business cards that are easy, secure, and shareable, for you and your team.</h2>
+                    <div class="buttons">
+                        <a href="{% url 'signup' %}" class="button is-light">Try it for Free</a>
+                        <!-- <a href="#" class="button is-link">For Teams</a> -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container">
+                <div class="columns is-multiline">
+                    <div class="column is-one-third">
+                        <div class="box">
+                            <h3 class="title is-4">Share Anywhere</h3>
+                            <p>Create business cards and have them sharable with a single scan or create links.</p>
+                        </div>
+                    </div>
+                    <div class="column is-one-third">
+                        <div class="box">
+                            <h3 class="title is-4">Easy Creation</h3>
+                            <p>Quickly create your digital business card in minutes with an intuitive interface.</p>
+                        </div>
+                    </div>
+                    <div class="column is-one-third">
+                        <div class="box">
+                            <h3 class="title is-4">Contacts Downloads</h3>
+                            <p>Easily download and manage your contacts from your digital business card.</p>
+                        </div>
+                    </div>
+                    <div class="column is-one-third">
+                        <div class="box">
+                            <h3 class="title is-4">Secure Storage</h3>
+                            <p>Your information is securely stored and easily accessible.</p>
+                        </div>
+                    </div>
+                    <div class="column is-one-third">
+                        <div class="box">
+                            <h3 class="title is-4">Customization Options</h3>
+                            <p>Personalize your card with different themes and layouts.</p>
+                        </div>
+                    </div>
+                    <div class="column is-one-third">
+                        <div class="box">
+                            <h3 class="title is-4">Analytics</h3>
+                            <p>Track how many times your card has been viewed and shared.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- <footer class="footer">
+            <div class="content has-text-centered">
+                <p>© 2024 FlashLink. All Rights Reserved.</p>
+            </div>
+        </footer> -->
+    </div>
 {% endblock content %}

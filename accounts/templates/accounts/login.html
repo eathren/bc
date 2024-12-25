@@ -1,41 +1,47 @@
-{% extends "core/base.html" %} {% load form_tags %} {% block title %} Login Page
-{% endblock title %} {% block content %}
-<div class="columns is-centered">
-  <div class="column is-half">
-    <div class="card">
-      <div class="card-content">
-        <h2 class="title">Login</h2>
-        {% if messages %}
-        <div class="notification is-danger">
-          {% for message in messages %} {{ message }} {% endfor %}
-        </div>
-        {% endif %}
-        <form method="post">
-          {% csrf_token %}
-          <div class="field">
-            <label class="label">Email</label>
-            <div class="control">{{ form.username|add_class:"input" }}</div>
-          </div>
-          <div class="field">
-            <label class="label">Password</label>
-            <div class="control">{{ form.password|add_class:"input" }}</div>
-          </div>
-          <div class="field">
-            <div class="control">
-              <button type="submit" class="button is-primary">Login</button>
+{% extends "core/base.html" %}
+{% load form_tags %}
+{% block title %}
+  Login Page
+{% endblock title %}
+{% block content %}
+  <div class="columns is-centered">
+    <div class="column is-half">
+      <div class="card">
+        <div class="card-content">
+          <h2 class="title">Login</h2>
+          {% if messages %}
+            <div class="notification is-danger">
+              {% for message in messages %}{{ message }}{% endfor %}
             </div>
-          </div>
-        </form>
+          {% endif %}
+          <form method="post">
+            {% csrf_token %}
+            <div class="field">
+              <label class="label">Email</label>
+              <div class="control">{{ form.username|add_class:"input" }}</div>
+            </div>
+            <div class="field">
+              <label class="label">Password</label>
+              <div class="control">{{ form.password|add_class:"input" }}</div>
+            </div>
+            <div class="field">
+              <div class="control">
+                <button type="submit" class="button is-primary is-fullwidth">Login</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <footer class="card-footer">
+          <p class="card-footer-item">
+            <a href="{% url 'password_reset' %}">Forgot Password?</a>
+          </p>
+        </footer>
       </div>
-      <footer class="card-footer">
-        <p class="card-footer-item">
-          <a href="{% url 'password_reset' %}">Forgot Password?</a>
+      <div class="has-text-centered" style="margin-top: 1rem;">
+        <p>
+          Don't have an account? <a href="{% url 'signup' %}">Signup</a>
         </p>
-        <p class="card-footer-item">
-          <a href="{% url 'signup' %}">Signup</a>
-        </p>
-      </footer>
+      </div>
     </div>
   </div>
-</div>
 {% endblock content %}
