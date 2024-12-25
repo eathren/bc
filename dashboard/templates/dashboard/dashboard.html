@@ -1,51 +1,43 @@
 {% extends "core/base.html" %}
-{% block title %} Dashboard {% endblock title %}
+{% block title %}
+  Dashboard
+{% endblock title %}
 {% block content %}
-<div class="columns is-centered">
-  <div class="column is-half">
-    <h2 class="title">Dashboard</h2>
-    <h3 class="subtitle">Your Business Cards</h3>
-    <ul>
-      {% for card in business_cards %}
-      <div class="card" style="margin-bottom: 10px">
-        <div class="card-content">
-          <li>
-            <a href="{% url 'business_card_detail' uuid=card.uuid %}">
-              <strong class="is-size-4">{{ card.title }}</strong>
-            </a>
-            <br />
-            <span class="is-size-5">{{ card.company_name }}</span>
-          </li>
-        </div>
-        <footer class="card-footer">
-          <a
-            href="{% url 'edit_business_card' uuid=card.uuid %}"
-            class="card-footer-item"
-            >Edit</a
-          >
-          <a
-            href="{% url 'business_card_detail' uuid=card.uuid %}"
-            class="card-footer-item"
-            >Share</a
-          >
-          {% comment %}
-          <a
-            href="{% url 'delete_business_card' uuid=card.uuid %}"
-            class="card-footer-item"
-            >Delete</a
-          >
-          {% endcomment %}
-        </footer>
-      </div>
-      {% empty %}
-      <li>No business cards found.</li>
-      {% endfor %}
-    </ul>
-    {% if can_add_card %}
-    <a href="{% url 'add_business_card' %}" class="button is-primary"
-      >Create New Card</a
-    >
-    {% endif %}
+  <div class="columns is-centered">
+    <div class="column is-half">
+      <h2 class="title">Dashboard</h2>
+      <h3 class="subtitle">Your Business Cards</h3>
+      <ul>
+        {% for card in business_cards %}
+          <div class="card" style="margin-bottom: 10px;">
+            <div class="card-content">
+              <li>
+                <a href="{% url 'business_card_detail' uuid=card.uuid %}">
+                  <strong class="is-size-4">{{ card.title }}</strong>
+                </a>
+                <br />
+                <span class="is-size-5">{{ card.company_name }}</span>
+              </li>
+            </div>
+            <footer class="card-footer">
+              <a href="{% url 'business_card_detail' uuid=card.uuid %}"
+                 class="card-footer-item">Preview</a>
+              <a href="{% url 'edit_business_card' uuid=card.uuid %}"
+                 class="card-footer-item">Edit</a>
+              <a href="{% url 'share_business_card' uuid=card.uuid %}"
+                 class="card-footer-item">Share</a>
+              {% comment %}
+          <a href="{% url 'delete_business_card' uuid=card.uuid %}" class="card-footer-item">Delete</a>
+              {% endcomment %}
+            </footer>
+          </div>
+        {% empty %}
+          <li>No business cards found.</li>
+        {% endfor %}
+      </ul>
+      {% if can_add_card %}
+        <a href="{% url 'add_business_card' %}" class="button is-primary">Create New Card</a>
+      {% endif %}
+    </div>
   </div>
-</div>
 {% endblock content %}

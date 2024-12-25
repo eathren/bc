@@ -31,6 +31,7 @@ ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=[])
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
+    "django.contrib.sites",
     "whitenoise.runserver_nostatic",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     "dashboard",
     
     # Third-party apps
+    "qrcode",
 ]
 
 MIDDLEWARE = [
@@ -139,5 +141,6 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+SITE_ID = 1
 # Activate Django-Heroku.
 django_heroku.settings(locals())
