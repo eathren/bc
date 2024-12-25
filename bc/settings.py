@@ -56,7 +56,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
- = "bc.urls"
+ROOT_URLCONF = "bc.urls"
 
 TEMPLATES = [
     {
@@ -124,6 +124,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+ROOT_URLCONF = "bc.urls"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
