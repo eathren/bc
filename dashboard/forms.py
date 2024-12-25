@@ -4,4 +4,4 @@ from .models import BusinessCard
 class BusinessCardForm(forms.ModelForm):
     class Meta:
         model = BusinessCard
-        fields = ['title', 'company_name', 'location', 'email', 'phone_number', 'website']
+        fields = ['first_name', 'last_name', 'title', 'company_name', 'location', 'email', 'phone_number', 'website']
