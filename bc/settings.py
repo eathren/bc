@@ -24,7 +24,7 @@ SECRET_KEY = env('DJANGO_SECRET_KEY', default='django-insecure-&#xn#*+0!69f5&ma)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DJANGO_DEBUG', default=True)
 
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=[])
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['flashlink.io', 'www.flashlink.io'])
 
 # Application definition
 
@@ -76,8 +76,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "bc.wsgi.application"
 
-ALLOWED_HOSTS = ["*"]
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -124,8 +122,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-ROOT_URLCONF = "bc.urls"
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
@@ -143,5 +139,9 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 SITE_ID = 1
+
+# CSRF settings
+CSRF_TRUSTED_ORIGINS = ['https://flashlink.io', 'https://www.flashlink.io']
+
 # Activate Django-Heroku.
 django_heroku.settings(locals())
