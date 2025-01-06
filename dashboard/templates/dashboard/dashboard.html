@@ -18,6 +18,7 @@
                 <br />
                 <span class="is-size-5">{{ card.company_name }}</span>
               </li>
+            
             </div>
             <footer class="card-footer">
               <a href="{% url 'business_card_detail' uuid=card.uuid %}"
@@ -26,9 +27,8 @@
                  class="card-footer-item">Edit</a>
               <a href="{% url 'share_business_card' uuid=card.uuid %}"
                  class="card-footer-item">Share</a>
-              {% comment %}
-          <a href="{% url 'delete_business_card' uuid=card.uuid %}" class="card-footer-item">Delete</a>
-              {% endcomment %}
+              <a href="{% url 'view_leads' uuid=card.uuid %}"
+                 class="card-footer-item">Leads</a>
             </footer>
           </div>
         {% empty %}

@@ -1,0 +1,32 @@
+{% extends "core/base.html" %}
+{% block title %}
+    Leads for {{ business_card.title }}
+{% endblock title %}
+{% block content %}
+    <div class="columns is-centered">
+        <div class="column is-half">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Leads for {{ business_card.title }}</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <h3 class="subtitle">{{ business_card.company_name }}</h3>
+                        <ul>
+                            {% for lead in leads %}
+                                <li>
+                                    <strong>{{ lead.name }}</strong> - {{ lead.email }} - {{ lead.phone_number }} - {{ lead.created_at|date:"Y-m-d H:i" }}
+                                </li>
+                            {% empty %}
+                                <li>No leads found.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <footer class="card-footer">
+                    <a href="{% url 'dashboard' %}" class="card-footer-item">Back to Dashboard</a>
+                </footer>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

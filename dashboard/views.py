@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import BusinessCard, Lead
+from .forms import BusinessCardForm
 
 @login_required
 def business_card_detail_view(request, uuid):
@@ -77,3 +78,19 @@ def delete_business_card_view(request, uuid):
         messages.success(request, 'Business card deleted successfully.')
         return redirect('dashboard')
     return render(request, 'dashboard/delete_business_card.html', {'business_card': business_card})
+
+
+@login_required
+def dashboard_view(request):
+    business_cards = BusinessCard.objects.filter(user=request.user).prefetch_related('leads')
+    can_add_card = business_cards.count() < 3
+    return render(request, 'dashboard/dashboard.html', {
+        'business_cards': business_cards,
+        'can_add_card': can_add_card
+    })
+
+@login_required
+def view_leads(request, uuid):
+    business_card = get_object_or_404(BusinessCard, uuid=uuid, user=request.user)
+    leads = business_card.leads.all()
+    return render(request, 'dashboard/view_leads.html', {'business_card': business_card, 'leads': leads})
