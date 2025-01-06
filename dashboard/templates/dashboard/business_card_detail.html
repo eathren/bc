@@ -5,9 +5,14 @@
 {% block content %}
     <div class="columns is-centered">
         <div class="column is-half">
-            <div class="card">
+            <div class="card" style="background-color: {{ business_card.background_color }};">
                 <div class="card-content">
-                    <h2 class="title">{{ business_card.title }}</h2>
+                    {% if business_card.logo %}
+                        <figure class="image is-128x128">
+                            <img src="{{ business_card.logo.url }}" alt="Logo">
+                        </figure>
+                    {% endif %}
+                    <h2 class="title" style="color: {{ business_card.icon_color }};">{{ business_card.title }}</h2>
                     {% if business_card.first_name or business_card.last_name %}
                         <p>
                             <strong>Name:</strong> {{ business_card.first_name }} {{ business_card.last_name }}
@@ -36,6 +41,16 @@
                     {% if business_card.website %}
                         <p>
                             <strong>Website:</strong> <a href="{{ business_card.website }}">{{ business_card.website }}</a>
+                        </p>
+                    {% endif %}
+                    {% if business_card.created_at %}
+                        <p>
+                            <strong>Created at:</strong> {{ business_card.created_at }}
+                        </p>
+                    {% endif %}
+                    {% if business_card.updated_at %}
+                        <p>
+                            <strong>Updated at:</strong> {{ business_card.updated_at }}
                         </p>
                     {% endif %}
                 </div>

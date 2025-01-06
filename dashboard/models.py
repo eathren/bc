@@ -16,6 +16,10 @@ class BusinessCard(models.Model):
     website = models.URLField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    icon_color = models.CharField(max_length=7, default='#000000')  # Default to black
+    background_color = models.CharField(max_length=7, default='#FFFFFF')  # Default to white
+    logo = models.ImageField(upload_to='logos/', blank=True, null=True)  # Logo field
+    allow_lead_capture = models.BooleanField(default=True)  # Allow lead capture
 
     def __str__(self):
         return f"{self.title} at {self.company_name}"

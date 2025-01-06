@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from dashboard.forms import BusinessCardForm
 from .models import BusinessCard
+from django.contrib import messages
 
 @login_required
 def business_card_detail_view(request, uuid):
@@ -17,13 +18,39 @@ def dashboard_view(request):
         'can_add_card': can_add_card
     })
 
+def capture_lead(request, uuid):
+    business_card = get_object_or_404(BusinessCard, uuid=uuid)
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        phone_number = request.POST.get('phone_number')
+        # Process the lead capture data (e.g., save to database, send email, etc.)
+        messages.success(request, 'Your contact info has been submitted.')
+        return redirect('share_business_card', uuid=uuid)
+    return render(request, 'dashboard/share_business_card.html', {'business_card': business_card})
+
+@login_required
+def add_business_card_view(request):
+    if request.method == 'POST':
+        form = BusinessCardForm(request.POST, request.FILES)
+        if form.is_valid():
+            business_card = form.save(commit=False)
+            business_card.user = request.user
+            business_card.save()
+            messages.success(request, 'Business card added successfully.')
+            return redirect('dashboard')
+    else:
+        form = BusinessCardForm()
+    return render(request, 'dashboard/add_business_card.html', {'form': form})
+
 @login_required
 def edit_business_card_view(request, uuid):
     business_card = get_object_or_404(BusinessCard, uuid=uuid, user=request.user)
     if request.method == 'POST':
-        form = BusinessCardForm(request.POST, instance=business_card)
+        form = BusinessCardForm(request.POST, request.FILES, instance=business_card)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Business card updated successfully.')
             return redirect('dashboard')
     else:
         form = BusinessCardForm(instance=business_card)
@@ -32,27 +59,13 @@ def edit_business_card_view(request, uuid):
 @login_required
 def share_business_card_view(request, uuid):
     business_card = get_object_or_404(BusinessCard, uuid=uuid, user=request.user)
-    return render(request, 'dashboard/share_business_card.html', {
-        'business_card': business_card,
-    })
-
-@login_required
-def add_business_card_view(request):
-    if request.method == 'POST':
-        form = BusinessCardForm(request.POST)
-        if form.is_valid():
-            business_card = form.save(commit=False)
-            business_card.user = request.user
-            business_card.save()
-            return redirect('dashboard')
-    else:
-        form = BusinessCardForm()
-    return render(request, 'dashboard/add_business_card.html', {'form': form})
+    return render(request, 'dashboard/share_business_card.html', {'business_card': business_card})
 
 @login_required
 def delete_business_card_view(request, uuid):
     business_card = get_object_or_404(BusinessCard, uuid=uuid, user=request.user)
     if request.method == 'POST':
         business_card.delete()
+        messages.success(request, 'Business card deleted successfully.')
         return redirect('dashboard')
     return render(request, 'dashboard/delete_business_card.html', {'business_card': business_card})
