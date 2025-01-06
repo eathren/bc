@@ -7,11 +7,11 @@
         <div class="column is-half">
             <div class="card" style="background-color: {{ business_card.background_color }};">
                 <div class="card-content">
-                    {% if business_card.logo %}
+                    <!-- {% if business_card.logo %}
                         <figure class="image is-128x128">
                             <img src="{{ business_card.logo.url }}" alt="Logo">
                         </figure>
-                    {% endif %}
+                    {% endif %} -->
                     <h2 class="title" style="color: {{ business_card.icon_color }};">{{ business_card.title }}</h2>
                     {% if business_card.first_name or business_card.last_name %}
                         <p>

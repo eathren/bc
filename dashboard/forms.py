@@ -6,7 +6,7 @@ class BusinessCardForm(forms.ModelForm):
         model = BusinessCard
         fields = [
             'first_name', 'last_name', 'title', 'company_name', 'location',
-            'email', 'phone_number', 'website', 'icon_color', 'background_color', 'logo', 'allow_lead_capture'
+            'email', 'phone_number', 'website', 'icon_color', 'background_color',  'allow_lead_capture'
         ]
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'input'}),
@@ -19,6 +19,6 @@ class BusinessCardForm(forms.ModelForm):
             'website': forms.URLInput(attrs={'class': 'input'}),
             'icon_color': forms.TextInput(attrs={'type': 'color', 'class': 'input'}),
             'background_color': forms.TextInput(attrs={'type': 'color', 'class': 'input'}),
-            'logo': forms.ClearableFileInput(attrs={'class': 'file-input'}),
+            # 'logo': forms.ClearableFileInput(attrs={'class': 'file-input'}),
             'allow_lead_capture': forms.CheckboxInput(attrs={'class': 'checkbox'}),
         }
