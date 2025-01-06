@@ -1,3 +1,5 @@
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -93,4 +95,14 @@ def dashboard_view(request):
 def view_leads(request, uuid):
     business_card = get_object_or_404(BusinessCard, uuid=uuid, user=request.user)
     leads = business_card.leads.all()
-    return render(request, 'dashboard/view_leads.html', {'business_card': business_card, 'leads': leads})
+
+    # Search functionality
+    query = request.GET.get('q', '')
+    if query:
+        leads = leads.filter(Q(name__icontains=query) | Q(email__icontains=query))
+
+    return render(request, 'dashboard/view_leads.html', {
+        'business_card': business_card,
+        'leads': leads,
+        'query': query,
+    })

@@ -12,10 +12,29 @@
                 <div class="card-content">
                     <div class="content">
                         <h3 class="subtitle">{{ business_card.company_name }}</h3>
+                        <form method="get" action="">
+                            <div class="field has-addons">
+                                <div class="control">
+                                    <input class="input" type="text" name="q" placeholder="Search leads" value="{{ query }}">
+                                </div>
+                                <div class="control">
+                                    <button type="submit" class="button is-primary">Search</button>
+                                </div>
+                            </div>
+                        </form>
                         <ul>
                             {% for lead in leads %}
-                                <li>
-                                    <strong>{{ lead.name }}</strong> - {{ lead.email }} - {{ lead.phone_number }} - {{ lead.created_at|date:"Y-m-d H:i" }}
+                                <li class="box">
+                                    {% if lead.name %}
+                                        <p><strong>Name:</strong> {{ lead.name }}</p>
+                                    {% endif %}
+                                    {% if lead.email %}
+                                        <p><strong>Email:</strong> {{ lead.email }}</p>
+                                    {% endif %}
+                                    {% if lead.phone_number %}
+                                        <p><strong>Phone:</strong> {{ lead.phone_number }}</p>
+                                    {% endif %}
+                                    <p><strong>Date:</strong> {{ lead.created_at|date:"Y-m-d H:i" }}</p>
                                 </li>
                             {% empty %}
                                 <li>No leads found.</li>
