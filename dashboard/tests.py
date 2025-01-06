@@ -1,8 +1,8 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
-from .models import BusinessCard
-from .forms import BusinessCardForm
 from django.urls import reverse
+from .models import BusinessCard, Lead
+from .forms import BusinessCardForm
 
 class BusinessCardModelTest(TestCase):
     def setUp(self):
@@ -42,6 +42,44 @@ class BusinessCardModelTest(TestCase):
 
     def test_get_absolute_url(self):
         self.assertEqual(self.business_card.get_absolute_url(), reverse('business_card_detail', kwargs={'uuid': self.business_card.uuid}))
+
+class LeadModelTest(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(
+            email='testuser@example.com',
+            password='password123',
+            first_name='Test',
+            last_name='User'
+        )
+        self.business_card = BusinessCard.objects.create(
+            user=self.user,
+            first_name='John',
+            last_name='Doe',
+            title='Software Engineer',
+            company_name='Tech Company',
+            location='New York, NY',
+            email='testuser@techcompany.com',
+            phone_number='123-456-7890',
+            website='https://www.techcompany.com'
+        )
+        self.lead = Lead.objects.create(
+            business_card=self.business_card,
+            user=self.user,
+            name='Jane Smith',
+            email='janesmith@example.com',
+            phone_number='987-654-3210'
+        )
+
+    def test_lead_creation(self):
+        self.assertEqual(self.lead.business_card, self.business_card)
+        self.assertEqual(self.lead.user, self.user)
+        self.assertEqual(self.lead.name, 'Jane Smith')
+        self.assertEqual(self.lead.email, 'janesmith@example.com')
+        self.assertEqual(self.lead.phone_number, '987-654-3210')
+        self.assertIsNotNone(self.lead.created_at)
+
+    def test_lead_str(self):
+        self.assertEqual(str(self.lead), 'Lead for Software Engineer at Tech Company by Jane Smith')
 
 class BusinessCardFormTest(TestCase):
     def setUp(self):
@@ -157,3 +195,25 @@ class BusinessCardViewTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('dashboard'))
         self.assertEqual(BusinessCard.objects.count(), 0)
+
+    def test_share_business_card_view(self):
+        response = self.client.get(reverse('share_business_card', kwargs={'uuid': self.business_card.uuid}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'dashboard/share_business_card.html')
+
+    def test_capture_lead_view(self):
+        data = {
+            'name': 'Jane Smith',
+            'email': 'janesmith@example.com',
+            'phone_number': '987-654-3210'
+        }
+        response = self.client.post(reverse('capture_lead', kwargs={'uuid': self.business_card.uuid}), data)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('business_card_detail', kwargs={'uuid': self.business_card.uuid}))
+        self.assertEqual(Lead.objects.count(), 1)
+        lead = Lead.objects.first()
+        self.assertEqual(lead.name, 'Jane Smith')
+        self.assertEqual(lead.email, 'janesmith@example.com')
+        self.assertEqual(lead.phone_number, '987-654-3210')
+        self.assertEqual(lead.business_card, self.business_card)
+        self.assertEqual(lead.user, self.user)

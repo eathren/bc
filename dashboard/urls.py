@@ -1,5 +1,13 @@
 from django.urls import path
-from .views import dashboard_view, capture_lead, add_business_card_view, business_card_detail_view, edit_business_card_view, share_business_card_view, delete_business_card_view
+from .views import (
+    dashboard_view,
+    capture_lead,
+    add_business_card_view,
+    business_card_detail_view,
+    edit_business_card_view,
+    share_business_card_view,
+    delete_business_card_view
+)
 
 urlpatterns = [
     path('', dashboard_view, name='dashboard'),

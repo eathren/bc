@@ -57,4 +57,63 @@
             </div>
         </div>
     </div>
+
+    {% if request.GET.capture_lead %}
+    <!-- Lead Capture Modal -->
+    <div class="modal is-active" id="lead-capture-modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Leave Your Contact Info</p>
+                <button class="delete" aria-label="close" id="close-modal"></button>
+            </header>
+            <section class="modal-card-body">
+                <form method="post" action="{% url 'capture_lead' uuid=business_card.uuid %}">
+                    {% csrf_token %}
+                    <div class="field">
+                        <label class="label">Name</label>
+                        <div class="control">
+                            <input class="input" type="text" name="name" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Email</label>
+                        <div class="control">
+                            <input class="input" type="email" name="email" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Phone Number</label>
+                        <div class="control">
+                            <input class="input" type="text" name="phone_number">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <button type="submit" class="button is-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button" id="cancel-button">Cancel</button>
+            </footer>
+        </div>
+    </div>
+    {% endif %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const closeModal = document.getElementById('close-modal');
+            const cancelButton = document.getElementById('cancel-button');
+            const leadCaptureModal = document.getElementById('lead-capture-modal');
+
+            closeModal.addEventListener('click', () => {
+                leadCaptureModal.classList.remove('is-active');
+            });
+
+            cancelButton.addEventListener('click', () => {
+                leadCaptureModal.classList.remove('is-active');
+            });
+        });
+    </script>
 {% endblock content %}

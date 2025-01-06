@@ -26,3 +26,14 @@ class BusinessCard(models.Model):
 
     def get_absolute_url(self):
         return reverse('business_card_detail', kwargs={'uuid': self.uuid})
+
+class Lead(models.Model):
+    business_card = models.ForeignKey(BusinessCard, on_delete=models.CASCADE, related_name='leads')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Lead for {self.business_card.title} by {self.name}"

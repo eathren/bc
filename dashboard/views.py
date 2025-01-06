@@ -1,8 +1,7 @@
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from dashboard.forms import BusinessCardForm
-from .models import BusinessCard
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .models import BusinessCard, Lead
 
 @login_required
 def business_card_detail_view(request, uuid):
@@ -24,9 +23,15 @@ def capture_lead(request, uuid):
         name = request.POST.get('name')
         email = request.POST.get('email')
         phone_number = request.POST.get('phone_number')
-        # Process the lead capture data (e.g., save to database, send email, etc.)
+        Lead.objects.create(
+            business_card=business_card,
+            user=business_card.user,
+            name=name,
+            email=email,
+            phone_number=phone_number
+        )
         messages.success(request, 'Your contact info has been submitted.')
-        return redirect('share_business_card', uuid=uuid)
+        return redirect('business_card_detail', uuid=uuid)
     return render(request, 'dashboard/share_business_card.html', {'business_card': business_card})
 
 @login_required
@@ -60,7 +65,10 @@ def edit_business_card_view(request, uuid):
 def share_business_card_view(request, uuid):
     business_card = get_object_or_404(BusinessCard, uuid=uuid, user=request.user)
     absolute_url = request.build_absolute_uri(business_card.get_absolute_url())
+    if business_card.allow_lead_capture:
+        absolute_url += '?capture_lead=true'
     return render(request, 'dashboard/share_business_card.html', {'business_card': business_card, 'absolute_url': absolute_url})
+
 @login_required
 def delete_business_card_view(request, uuid):
     business_card = get_object_or_404(BusinessCard, uuid=uuid, user=request.user)
