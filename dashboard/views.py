@@ -59,8 +59,8 @@ def edit_business_card_view(request, uuid):
 @login_required
 def share_business_card_view(request, uuid):
     business_card = get_object_or_404(BusinessCard, uuid=uuid, user=request.user)
-    return render(request, 'dashboard/share_business_card.html', {'business_card': business_card})
-
+    absolute_url = request.build_absolute_uri(business_card.get_absolute_url())
+    return render(request, 'dashboard/share_business_card.html', {'business_card': business_card, 'absolute_url': absolute_url})
 @login_required
 def delete_business_card_view(request, uuid):
     business_card = get_object_or_404(BusinessCard, uuid=uuid, user=request.user)
