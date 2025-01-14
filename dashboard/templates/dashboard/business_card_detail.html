@@ -12,7 +12,7 @@
                             <img src="{{ business_card.logo.url }}" alt="Logo">
                         </figure>
                     {% endif %} -->
-                    <h2 class="title" style="color: {{ business_card.icon_color }};">{{ business_card.title }}</h2>
+                    <h2 class="title" style="color: {{ business_card.icon_color|default:'#000000' }};">{{ business_card.title }}</h2>
                     {% if business_card.first_name or business_card.last_name %}
                         <p>
                             <strong>Name:</strong> {{ business_card.first_name }} {{ business_card.last_name }}
@@ -43,16 +43,6 @@
                             <strong>Website:</strong> <a href="{{ business_card.website }}">{{ business_card.website }}</a>
                         </p>
                     {% endif %}
-                    {% if business_card.created_at %}
-                        <p>
-                            <strong>Created at:</strong> {{ business_card.created_at }}
-                        </p>
-                    {% endif %}
-                    {% if business_card.updated_at %}
-                        <p>
-                            <strong>Updated at:</strong> {{ business_card.updated_at }}
-                        </p>
-                    {% endif %}
                 </div>
             </div>
         </div>
@@ -64,7 +54,7 @@
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head">
-                <p class="modal-card-title">Leave Your Contact Info</p>
+                <p class="modal-card-title">Share your info with {{ business_card.first_name }} {{business_card.last_name}}</p>
                 <button class="delete" aria-label="close" id="close-modal"></button>
             </header>
             <section class="modal-card-body">
@@ -89,6 +79,24 @@
                         </div>
                     </div>
                     <div class="field">
+                        <label class="label">Job Title</label>
+                        <div class="control">
+                            <input class="input" type="text" name="job_title">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Company</label>
+                        <div class="control">
+                            <input class="input" type="text" name="company">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Notes</label>
+                        <div class="control">
+                            <textarea class="textarea" name="notes"></textarea>
+                        </div>
+                    </div>
+                    <div class="field">
                         <div class="control">
                             <button type="submit" class="button is-primary">Submit</button>
                         </div>
@@ -96,7 +104,9 @@
                 </form>
             </section>
             <footer class="modal-card-foot">
-                <button class="button" id="cancel-button">Cancel</button>
+                <p class="has-text-centered">
+                    <strong>Flashlink</strong> does not sell or share your data.
+                </p>
             </footer>
         </div>
     </div>
@@ -111,7 +121,8 @@
                 leadCaptureModal.classList.remove('is-active');
             });
 
-            cancelButton.addEventListener('click', () => {
+            cancelButton.addEventListener('click', (event) => {
+                event.preventDefault();
                 leadCaptureModal.classList.remove('is-active');
             });
         });

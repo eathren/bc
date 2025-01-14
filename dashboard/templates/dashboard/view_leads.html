@@ -5,47 +5,44 @@
 {% block content %}
     <div class="columns is-centered">
         <div class="column is-half">
-            <div class="card">
-                <header class="card-header">
-                    <p class="card-header-title">Leads for {{ business_card.title }}</p>
-                </header>
-                <div class="card-content">
-                    <div class="content">
-                        <h3 class="subtitle">{{ business_card.company_name }}</h3>
-                        <form method="get" action="">
-                            <div class="field has-addons">
-                                <div class="control">
-                                    <input class="input" type="text" name="q" placeholder="Search leads" value="{{ query }}">
-                                </div>
-                                <div class="control">
-                                    <button type="submit" class="button is-primary">Search</button>
-                                </div>
-                            </div>
-                        </form>
-                        <ul>
-                            {% for lead in leads %}
-                                <li class="box">
-                                    {% if lead.name %}
-                                        <p><strong>Name:</strong> {{ lead.name }}</p>
-                                    {% endif %}
-                                    {% if lead.email %}
-                                        <p><strong>Email:</strong> {{ lead.email }}</p>
-                                    {% endif %}
-                                    {% if lead.phone_number %}
-                                        <p><strong>Phone:</strong> {{ lead.phone_number }}</p>
-                                    {% endif %}
-                                    <p><strong>Date:</strong> {{ lead.created_at|date:"Y-m-d H:i" }}</p>
-                                </li>
-                            {% empty %}
-                                <li>No leads found.</li>
-                            {% endfor %}
-                        </ul>
+            <div class="content">
+                <h3 class="subtitle">{{ business_card.company_name }}</h3>
+                <form method="get" action="">
+                    <div class="field has-addons">
+                        <div class="control">
+                            <input class="input" type="text" name="q" placeholder="Search leads" value="{{ query }}">
+                        </div>
+                        <div class="control">
+                            <button type="submit" class="button is-primary">Search</button>
+                        </div>
                     </div>
-                </div>
-                <footer class="card-footer">
-                    <a href="{% url 'dashboard' %}" class="card-footer-item">Back to Dashboard</a>
-                </footer>
+                </form>
+                <ul>
+                    {% for lead in leads %}
+                        <li class="box lead-item">
+                            <a href="{% url 'lead_detail' lead.id %}" class="has-text-black">
+                                <div class="is-flex is-justify-content-space-between">
+                                    <div>
+                                        <h4 class="title is-4">{{ lead.name }}</h4>
+                                        <p class="is-4">{{ lead.email }}</p>
+                                    </div>
+                                    <span>{{ lead.created_at|date:"M d, Y " }}</span>
+                                </div>
+                            </a>
+                        </li>
+                    {% empty %}
+                        <li>No leads found.</li>
+                    {% endfor %}
+                </ul>
             </div>
+            <footer>
+                <a href="{% url 'dashboard' %}" class="card-footer-item">Back to Dashboard</a>
+            </footer>
         </div>
     </div>
+    <style>
+        .lead-item:hover {
+            background-color: #f8f8f8;
+        }
+    </style>
 {% endblock content %}

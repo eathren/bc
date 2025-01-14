@@ -38,6 +38,19 @@ def capture_lead(request, uuid):
     return render(request, 'dashboard/share_business_card.html', {'business_card': business_card})
 
 @login_required
+def lead_detail_view(request, id):
+    lead = get_object_or_404(Lead, id=id)
+    return render(request, 'dashboard/lead_detail.html', {'lead': lead})
+
+@login_required
+def delete_lead(request, id):
+    lead = get_object_or_404(Lead, id=id)
+    business_card_uuid = lead.business_card.uuid
+    lead.delete()
+    messages.success(request, 'Lead deleted successfully.')
+    return redirect('view_leads', uuid=business_card_uuid)
+
+@login_required
 def add_business_card_view(request):
     if request.method == 'POST':
         form = BusinessCardForm(request.POST, request.FILES)

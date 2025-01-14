@@ -7,7 +7,9 @@ from .views import (
     edit_business_card_view,
     share_business_card_view,
     delete_business_card_view,
-    view_leads
+    view_leads,
+    delete_lead,
+    lead_detail_view 
 )
 
 urlpatterns = [
@@ -19,4 +21,6 @@ urlpatterns = [
     path('card/<uuid:uuid>/delete/', delete_business_card_view, name='delete_business_card'),
     path('card/<uuid:uuid>/leads/', view_leads, name='view_leads'),
     path('capture-lead/<uuid:uuid>/', capture_lead, name='capture_lead'),
+    path('lead/delete/<int:id>/', delete_lead, name='delete_lead'),
+    path('lead/<int:id>/', lead_detail_view, name='lead_detail'), 
 ]
