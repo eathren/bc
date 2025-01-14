@@ -1,5 +1,6 @@
 {% extends "core/base.html" %}
 {% load form_tags %}
+{% load custom_filters %}
 {% block title %}
   Signup Page
 {% endblock title %}
@@ -9,9 +10,9 @@
       <div class="card">
         <div class="card-content">
           <h2 class="title">Signup</h2>
-          {% if messages %}
+        {% if messages %}
             <div class="notification is-danger">
-              {% for message in messages %}{{ message }}{% endfor %}
+              {% for message in messages|auth_messages %}{{ message }}{% endfor %}
             </div>
           {% endif %}
           <form method="post">
