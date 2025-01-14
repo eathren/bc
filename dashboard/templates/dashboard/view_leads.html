@@ -21,12 +21,12 @@
                     {% for lead in leads %}
                         <li class="box lead-item">
                             <a href="{% url 'lead_detail' lead.id %}" class="has-text-black">
-                                <div class="is-flex is-justify-content-space-between">
+                                <div class="lead-info is-flex is-justify-content-space-between">
                                     <div>
                                         <h4 class="title is-4">{{ lead.name }}</h4>
                                         <p class="is-4">{{ lead.email }}</p>
                                     </div>
-                                    <span>{{ lead.created_at|date:"M d, Y " }}</span>
+                                    <span class="lead-date">{{ lead.created_at|date:"M d, Y " }}</span>
                                 </div>
                             </a>
                         </li>
@@ -43,6 +43,19 @@
     <style>
         .lead-item:hover {
             background-color: #f8f8f8;
+        }
+        .lead-info {
+            flex-wrap: wrap;
+        }
+        .lead-date {
+            flex: 0 0 100%;
+            text-align: left;
+        }
+        @media (min-width: 768px) {
+            .lead-date {
+                flex: 0 0 auto;
+                text-align: left;
+            }
         }
     </style>
 {% endblock content %}
