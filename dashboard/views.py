@@ -6,7 +6,6 @@ from django.contrib import messages
 from .models import BusinessCard, Lead
 from .forms import BusinessCardForm
 
-@login_required
 def business_card_detail_view(request, uuid):
     business_card = get_object_or_404(BusinessCard, uuid=uuid, user=request.user)
     return render(request, 'dashboard/business_card_detail.html', {'business_card': business_card})
